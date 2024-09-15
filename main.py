@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import discord
+import os
 from discord.ext import commands
 
 def laoautod():
@@ -97,7 +98,7 @@ def scan():
 
 def send_message(MESSAGE):
     # Replace with your bot token
-    TOKEN = 'MTI4NDg4MjU2OTY0NDQ3ODU0Ng.GQl29E.5lA5ByC9VSC-MMpa5KsXG-huMLSPxxLpEvDmWk'
+    TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
     # Replace with the user ID of the person you want to message
     USER_ID = 355234522582876162  # User ID as an integer
