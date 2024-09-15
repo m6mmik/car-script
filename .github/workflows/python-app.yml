@@ -4,24 +4,28 @@ on:
   schedule:
     # Runs every day at midnight UTC
     - cron: '0 0 * * *'
-  workflow_dispatch:
-  
+  workflow_dispatch:  # Allows manual triggering
+
 jobs:
-  build:
+  run-script:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' # install the python version needed
-          
-      - name: Install dependencies
-        uses: py-actions/py-dependency-install@v4
-        with:
-              path: "requirements.txt"
-      - name: Run Python script
-        env:
-          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-        run: |
-          python3 main.py
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'  # Replace with the specific version if needed
+
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip list  # Print installed packages for debugging
+
+    - name: Run Python script
+      env:
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+      run: |
+        python main.py
