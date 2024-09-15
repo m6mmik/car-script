@@ -14,19 +14,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v4
       with:
-        python-version: '3.x'  # Replace with the specific version if needed
-
-    - name: Install dependencies
-      run: |
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        pip list  # Print installed packages for debugging
-        pip install poetry
-        poetry install --no-interaction --all-extras
-        poetry add requests
-
+        path: "requirements.txt"
     - name: Run Python script
       env:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
